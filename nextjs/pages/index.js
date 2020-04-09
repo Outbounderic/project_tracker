@@ -28,7 +28,12 @@ function createData(name, date, service, features, complexity, platform, users, 
 export default function ProjectTracker() {
   const classes = useStyles()
   const theme = useTheme()
-  const [rows, setRows] = useState([createData("Eric", "04/09/20", "Project Tracker", "N/A", "N/A", "N/A", "10", "$2000")])
+  const [rows, setRows] = useState([
+    createData("Eric", "04/09/20", "Project Tracker", "N/A", "N/A", "N/A", "10", "$2000"),
+    createData("Eric", "04/09/20", "Project Tracker", "This is a test to see how far it pushes", "N/A", "N/A", "10", "$2000"),
+    createData("Eric", "04/09/20", "Project Tracker", "N/A", "N/A", "N/A", "10", "$2000"),
+    createData("Eric", "04/09/20", "Project Tracker", "N/A", "N/A", "N/A", "10", "$2000")
+  ])
 
   const [websiteChecked, setWebsiteChecked] = useState(false)
   const [iOSChecked, setiOSChecked] = useState(false)
@@ -104,32 +109,32 @@ export default function ProjectTracker() {
           <FilterListIcon color="secondary" style={{fontSize: 50}} />
         </Grid>
       </Grid>
-      <Grid item>
-        <TableContainer component={Paper}>
+      <Grid item style={{marginBottom: "15em"}}>
+        <TableContainer component={Paper} elevation={0}>
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>Name</TableCell>
-                <TableCell>Date</TableCell>
-                <TableCell>Service</TableCell>
-                <TableCell>Features</TableCell>
-                <TableCell>Complexity</TableCell>
-                <TableCell>Platforms</TableCell>
-                <TableCell>Users</TableCell>
-                <TableCell>Total</TableCell>
+                <TableCell align="center">Name</TableCell>
+                <TableCell align="center">Date</TableCell>
+                <TableCell align="center">Service</TableCell>
+                <TableCell align="center">Features</TableCell>
+                <TableCell align="center">Complexity</TableCell>
+                <TableCell align="center">Platforms</TableCell>
+                <TableCell align="center">Users</TableCell>
+                <TableCell align="center">Total</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {rows.map((row, index) =>
                 <TableRow key={index}>
-                  <TableCell>{row.name}</TableCell>
-                  <TableCell>{row.date}</TableCell>
-                  <TableCell>{row.service}</TableCell>
-                  <TableCell>{row.features}</TableCell>
-                  <TableCell>{row.complexity}</TableCell>
-                  <TableCell>{row.platform}</TableCell>
-                  <TableCell>{row.users}</TableCell>
-                  <TableCell>{row.total}</TableCell>
+                  <TableCell align="center">{row.name}</TableCell>
+                  <TableCell align="center">{row.date}</TableCell>
+                  <TableCell align="center">{row.service}</TableCell>
+                  <TableCell style={{maxWidth: "5em"}} align="center">{row.features}</TableCell>
+                  <TableCell align="center">{row.complexity}</TableCell>
+                  <TableCell align="center">{row.platform}</TableCell>
+                  <TableCell align="center">{row.users}</TableCell>
+                  <TableCell align="center">{row.total}</TableCell>
                 </TableRow>
               )}
             </TableBody>
