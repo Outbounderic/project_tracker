@@ -44,6 +44,9 @@ export default function ProjectTracker() {
   const [androidChecked, setAndroidChecked] = useState(false)
   const [softwareChecked, setSoftwareChecked] = useState(false)
   const [dialogOpen, setDialogOpen] = useState(false)
+  const [name, setName] = useState("")
+  const [date, setDate] = useState(new Date())
+  const [total, setTotal] = useState("")
 
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -57,7 +60,11 @@ export default function ProjectTracker() {
             style={{width: "35em", marginLeft: "5em"}}
             InputProps={{
               endAdornment:
-              <InputAdornment position="end" onClick={() => setDialogOpen(true)}>
+              <InputAdornment
+                position="end"
+                onClick={() => setDialogOpen(true)}
+                style={{cursor: "pointer"}}
+                >
                 <AddIcon color="primary" style={{fontSize: 30}}/>
               </InputAdornment>
             }}
@@ -147,7 +154,7 @@ export default function ProjectTracker() {
             </Table>
           </TableContainer>
         </Grid>
-        <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
+        <Dialog fullWidth maxWidth="md" open={dialogOpen} onClose={() => setDialogOpen(false)}>
           <Grid container justify="center">
             <Grid item>
               <Typography variant="h1" gutterBottom>
@@ -155,6 +162,48 @@ export default function ProjectTracker() {
               </Typography>
             </Grid>
           </Grid>
+          <DialogContent>
+            <Grid container justify="space-between">
+              <Grid item>
+                <Grid item container direction="column" sm>
+                  <Grid item>
+                    <TextField
+                      label="Name"
+                      id="name"
+                      value={name}
+                      onChange={(event) => setName(event.target.value)} />
+                  </Grid>
+                </Grid>
+              </Grid>
+              <Grid item>
+                <Grid item container direction="column" sm style={{marginTop: 16}}>
+                  <Grid item>
+                    <KeyboardDatePicker
+                      form="MM/dd/yyyy"
+                      value={date}
+                      onChange={newDate => setDate(newDate)}
+                    />
+                  </Grid>
+                </Grid>
+              </Grid>
+              <Grid item>
+                <Grid item container direction="column" sm>
+                  <Grid item>
+                    <TextField
+                      InputProps={{startAdornment:
+                        <InputAdornment position="start">
+                          $
+                        </InputAdornment>
+                      }}
+                      label="Total"
+                      id="total"
+                      value={total}
+                      onChange={(event) => setTotal(event.target.value)} />
+                  </Grid>
+                </Grid>
+              </Grid>
+            </Grid>
+          </DialogContent>
         </Dialog>
       </Grid>
     </MuiPickersUtilsProvider>
