@@ -25,18 +25,18 @@ const useStyles = makeStyles(theme => ({
 
 }))
 
-function createData(name, date, service, features, complexity, platform, users, total) {
-  return { name, date, service, features, complexity, platform, users, total }
+function createData(name, date, service, features, platform, users, total) {
+  return { name, date, service, features, platform, users, total }
 }
 
 export default function ProjectTracker() {
   const classes = useStyles()
   const theme = useTheme()
   const [rows, setRows] = useState([
-    createData("Eric", "04/09/20", "Project Tracker", "N/A", "N/A", "N/A", "10", "$2000"),
-    createData("Eric", "04/09/20", "Project Tracker", "This is a test to see how far it pushes", "N/A", "N/A", "10", "$2000"),
-    createData("Eric", "04/09/20", "Project Tracker", "N/A", "N/A", "N/A", "10", "$2000"),
-    createData("Eric", "04/09/20", "Project Tracker", "N/A", "N/A", "N/A", "10", "$2000")
+    createData("Eric", "04/09/20", "Project Tracker", "N/A", "N/A", "10", "$2000"),
+    createData("Eric", "04/09/20", "Project Tracker", "This is a test to see how far it pushes", "N/A", "10", "$2000"),
+    createData("Eric", "04/09/20", "Project Tracker", "N/A", "N/A", "10", "$2000"),
+    createData("Eric", "04/09/20", "Project Tracker", "N/A", "N/A", "10", "$2000")
   ])
 
   const [websiteChecked, setWebsiteChecked] = useState(false)
@@ -56,7 +56,7 @@ export default function ProjectTracker() {
         </Grid>
         <Grid item>
           <TextField
-            placeholder="Search prject details or create a new entry."
+            placeholder="Search project details or create a new entry."
             style={{width: "35em", marginLeft: "5em"}}
             InputProps={{
               endAdornment:
@@ -131,7 +131,6 @@ export default function ProjectTracker() {
                   <TableCell align="center">Date</TableCell>
                   <TableCell align="center">Service</TableCell>
                   <TableCell align="center">Features</TableCell>
-                  <TableCell align="center">Complexity</TableCell>
                   <TableCell align="center">Platforms</TableCell>
                   <TableCell align="center">Users</TableCell>
                   <TableCell align="center">Total</TableCell>
@@ -144,7 +143,6 @@ export default function ProjectTracker() {
                     <TableCell align="center">{row.date}</TableCell>
                     <TableCell align="center">{row.service}</TableCell>
                     <TableCell style={{maxWidth: "5em"}} align="center">{row.features}</TableCell>
-                    <TableCell align="center">{row.complexity}</TableCell>
                     <TableCell align="center">{row.platform}</TableCell>
                     <TableCell align="center">{row.users}</TableCell>
                     <TableCell align="center">{row.total}</TableCell>
