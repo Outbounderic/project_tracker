@@ -18,7 +18,7 @@ const ProjectSchema = new mongoose.Schema({
   features: {
     type: String
   },
-  platform: {
+  platforms: {
     type: String
   },
   users: {

@@ -25,6 +25,10 @@ import Radio from '@material-ui/core/Radio'
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
 import Button from '@material-ui/core/Button'
+import { format } from "date-fns";
+// import EnhancedTable from "../src/ui/EnhancedTable";
+// import useMediaQuery from "@material-ui/core/useMediaQuery";
+// import Hidden from "@material-ui/core/Hidden";
 
 const useStyles = makeStyles(theme => ({
   service: {
@@ -44,8 +48,8 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-function createData(name, date, service, complexity, features, platform, users, total) {
-  return { name, date, service, complexity, features, platform, users, total }
+function createData(name, date, service, complexity, features, platforms, users, total) {
+  return { name, date, service, complexity, features, platforms, users, total }
 }
 
 export default function ProjectTracker() {
@@ -59,7 +63,8 @@ export default function ProjectTracker() {
   ])
 
   const platformOptions = ["Web", "iOS", "Android"]
-  const featureOptions = ["Photo/Video", "GPS", "File Transfer", "Users/Authentication", "Biometrics", "Push Notifications"]
+  let featureOptions = ["Photo/Video", "GPS", "File Transfer", "Users/Authentication", "Biometrics", "Push Notifications"]
+  let websiteOptions = ["Basic", "Interactive", "E-Commerce"]
 
   const [websiteChecked, setWebsiteChecked] = useState(false)
   const [iOSChecked, setiOSChecked] = useState(false)
@@ -74,6 +79,30 @@ export default function ProjectTracker() {
   const [users, setUsers] = useState("")
   const [platforms, setPlatforms] = useState([])
   const [features, setFeatures] = useState([])
+
+  const addProject = () => {
+    setRows(
+      [...rows,
+      createData(
+        name,
+        format(date, "MM/dd/yy"),
+        service,
+        service === "Website" ? "N/A" : complexity,
+        features.join(", "),
+        service === "Website" ? "N/A" : platforms.join(", "),
+        service === "Website" ? "N/A" : users,
+        `$${total}`
+      )])
+    setDialogOpen(false)
+    setName("")
+    setDate(new Date())
+    setTotal("")
+    setService("")
+    setComplexity("")
+    setUsers("")
+    setPlatforms([])
+    setFeatures([])
+  }
 
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -172,7 +201,7 @@ export default function ProjectTracker() {
                     <TableCell align="center">{row.service}</TableCell>
                     <TableCell align="center">{row.complexity}</TableCell>
                     <TableCell style={{maxWidth: "5em"}} align="center">{row.features}</TableCell>
-                    <TableCell align="center">{row.platform}</TableCell>
+                    <TableCell align="center">{row.platforms}</TableCell>
                     <TableCell align="center">{row.users}</TableCell>
                     <TableCell align="center">{row.total}</TableCell>
                   </TableRow>
@@ -214,7 +243,8 @@ export default function ProjectTracker() {
                         aria-label="service"
                         name="service"
                         value={service}
-                        onChange={event => setService(event.target.value)}
+                        onChange={event => {setService(event.target.value)
+                        setFeatures([])}}
                         >
                         <FormControlLabel
                           classes={{label: classes.service}}
@@ -240,6 +270,7 @@ export default function ProjectTracker() {
                       <Select
                         labelId="platforms"
                         id="platforms"
+                        disabled={service === "Website"}
                         style={{width: "12em"}}
                         multiple
                         displayEmpty
@@ -287,18 +318,21 @@ export default function ProjectTracker() {
                           onChange={event => setComplexity(event.target.value)}
                           >
                           <FormControlLabel
+                            disabled={service === "Website"}
                             classes={{label: classes.service}}
                             value="Low"
                             label="Low"
                             control={<Radio />}
                           />
                           <FormControlLabel
+                            disabled={service === "Website"}
                             classes={{label: classes.service}}
                             value="Med"
                             label="Med"
                             control={<Radio />}
                           />
                           <FormControlLabel
+                            disabled={service === "Website"}
                             classes={{label: classes.service}}
                             value="High"
                             label="High"
@@ -346,18 +380,21 @@ export default function ProjectTracker() {
                           onChange={event => setUsers(event.target.value)}
                           >
                           <FormControlLabel
+                            disabled={service === "Website"}
                             classes={{label: classes.service, root: classes.users}}
                             value="0-10"
                             label="0-10"
                             control={<Radio />}
                           />
                           <FormControlLabel
+                            disabled={service === "Website"}
                             classes={{label: classes.service, root: classes.users}}
                             value="10-100"
                             label="10-100"
                             control={<Radio />}
                           />
                           <FormControlLabel
+                            disabled={service === "Website"}
                             classes={{label: classes.service, root: classes.users}}
                             value="100-500"
                             label="100-500"
@@ -379,20 +416,31 @@ export default function ProjectTracker() {
                       value={features}
                       onChange={event => setFeatures(event.target.value)
                     }>
-                      {featureOptions.map(option => <MenuItem key={option} value={option}>
+                      {service === "Website" ? featureOptions = websiteOptions : null}
+                      {featureOptions.map(option => (<MenuItem key={option} value={option}>
                         {option}
-                      </MenuItem>)}
+                      </MenuItem>))}
                     </Select>
                   </Grid>
                 </Grid>
               </Grid>
             </Grid>
-            <Grid container justify="center">
+            <Grid container justify="center" style={{marginTop: "3em"}}>
               <Grid item>
-                <Button color="primary" style={{fontWeight: 300}}>Cancel</Button>
+                <Button onClick={() => setDialogOpen(false)} color="primary" style={{fontWeight: 300}}>Cancel</Button>
               </Grid>
               <Grid item>
-                <Button variant="contained" className={classes.button}>Add Project +</Button>
+                <Button
+                  variant="contained"
+                  className={classes.button}
+                  onClick={addProject}
+                  disabled={
+                    service === "Website" ?
+                    name.length === 0 || total.length === 0 || features.length === 0 || features.length > 1:
+                    name.length === 0 || total.length === 0 || features.length === 0 || users.length === 0 || complexity.length === 0 || platforms.length === 0 || service.length === 0
+                  }>
+                    Add Project +
+                  </Button>
               </Grid>
             </Grid>
           </DialogContent>
