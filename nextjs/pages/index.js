@@ -22,10 +22,25 @@ import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/picker
 import DateFnsUtils from '@date-io/date-fns'
 import RadioGroup from '@material-ui/core/RadioGroup'
 import Radio from '@material-ui/core/Radio'
+import Select from '@material-ui/core/Select'
+import MenuItem from '@material-ui/core/MenuItem'
+import Button from '@material-ui/core/Button'
 
 const useStyles = makeStyles(theme => ({
   service: {
     fontWeight: 300
+  },
+  users: {
+    marginRight: 0
+  },
+  button: {
+    color: "#fff",
+    backgroundColor: theme.palette.common.orange,
+    borderRadius: 50,
+    textTransform: "none",
+    "&:hover": {
+      backgroundColor: theme.palette.secondary.light
+    }
   }
 }))
 
@@ -43,6 +58,9 @@ export default function ProjectTracker() {
     createData("Eric", "04/09/20", "Project Tracker", "Med", "N/A", "N/A", "10", "$2000")
   ])
 
+  const platformOptions = ["Web", "iOS", "Android"]
+  const featureOptions = ["Photo/Video", "GPS", "File Transfer", "Users/Authentication", "Biometrics", "Push Notifications"]
+
   const [websiteChecked, setWebsiteChecked] = useState(false)
   const [iOSChecked, setiOSChecked] = useState(false)
   const [androidChecked, setAndroidChecked] = useState(false)
@@ -54,6 +72,8 @@ export default function ProjectTracker() {
   const [service, setService] = useState("")
   const [complexity, setComplexity] = useState("")
   const [users, setUsers] = useState("")
+  const [platforms, setPlatforms] = useState([])
+  const [features, setFeatures] = useState([])
 
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -176,6 +196,7 @@ export default function ProjectTracker() {
                   <Grid item>
                     <TextField
                       label="Name"
+                      fullWidth
                       id="name"
                       value={name}
                       onChange={(event) => setName(event.target.value)} />
@@ -215,11 +236,33 @@ export default function ProjectTracker() {
                         />
                       </RadioGroup>
                     </Grid>
+                    <Grid item style={{marginTop: "5em"}}>
+                      <Select
+                        labelId="platforms"
+                        id="platforms"
+                        style={{width: "12em"}}
+                        multiple
+                        displayEmpty
+                        renderValue={platforms.length > 0 ? undefined : () => "Platforms"}
+                        value={platforms}
+                        onChange={event => setPlatforms(event.target.value)
+                      }>
+                        {platformOptions.map(option => <MenuItem key={option} value={option}>
+                          {option}
+                        </MenuItem>)}
+                      </Select>
+                    </Grid>
                   </Grid>
                 </Grid>
               </Grid>
               <Grid item>
-                <Grid item container direction="column" sm style={{marginTop: 16}}>
+                <Grid
+                  item
+                  container
+                  direction="column"
+                  sm
+                  alignItems="center"
+                  style={{marginTop: 16}}>
                   <Grid item>
                     <KeyboardDatePicker
                       form="MM/dd/yyyy"
@@ -227,46 +270,53 @@ export default function ProjectTracker() {
                       onChange={newDate => setDate(newDate)}
                     />
                   </Grid>
-                  <Grid
-                    item
-                    container
-                    direction="column"
-                    style={{marginTop: "5em"}}>
-                    <Grid item>
-                      <Typography variant="h4">Complexity</Typography>
-                    </Grid>
-                    <Grid item>
-                      <RadioGroup
-                        aria-label="Complexity"
-                        name="Complexity"
-                        value={service}
-                        onChange={event => setComplexity(event.target.value)}
-                        >
-                        <FormControlLabel
-                          classes={{label: classes.service}}
-                          value="Low"
-                          label="Low"
-                          control={<Radio />}
-                        />
-                        <FormControlLabel
-                          classes={{label: classes.service}}
-                          value="Med"
-                          label="Med"
-                          control={<Radio />}
-                        />
-                        <FormControlLabel
-                          classes={{label: classes.service}}
-                          value="High"
-                          label="High"
-                          control={<Radio />}
-                        />
-                      </RadioGroup>
+                  <Grid item>
+                    <Grid
+                      item
+                      container
+                      direction="column"
+                      style={{marginTop: "5em"}}>
+                      <Grid item>
+                        <Typography variant="h4">Complexity</Typography>
+                      </Grid>
+                      <Grid item>
+                        <RadioGroup
+                          aria-label="Complexity"
+                          name="Complexity"
+                          value={complexity}
+                          onChange={event => setComplexity(event.target.value)}
+                          >
+                          <FormControlLabel
+                            classes={{label: classes.service}}
+                            value="Low"
+                            label="Low"
+                            control={<Radio />}
+                          />
+                          <FormControlLabel
+                            classes={{label: classes.service}}
+                            value="Med"
+                            label="Med"
+                            control={<Radio />}
+                          />
+                          <FormControlLabel
+                            classes={{label: classes.service}}
+                            value="High"
+                            label="High"
+                            control={<Radio />}
+                          />
+                        </RadioGroup>
+                      </Grid>
                     </Grid>
                   </Grid>
                 </Grid>
               </Grid>
               <Grid item>
-                <Grid item container direction="column" sm>
+                <Grid
+                  item
+                  container
+                  direction="column"
+                  sm
+                >
                   <Grid item>
                     <TextField
                       InputProps={{startAdornment:
@@ -279,7 +329,70 @@ export default function ProjectTracker() {
                       value={total}
                       onChange={(event) => setTotal(event.target.value)} />
                   </Grid>
+                  <Grid item style={{alignSelf: "flex-end"}}>
+                    <Grid
+                      item
+                      container
+                      direction="column"
+                      style={{marginTop: "5em"}}>
+                      <Grid item>
+                        <Typography variant="h4">Users</Typography>
+                      </Grid>
+                      <Grid item>
+                        <RadioGroup
+                          aria-label="Users"
+                          name="User"
+                          value={users}
+                          onChange={event => setUsers(event.target.value)}
+                          >
+                          <FormControlLabel
+                            classes={{label: classes.service, root: classes.users}}
+                            value="0-10"
+                            label="0-10"
+                            control={<Radio />}
+                          />
+                          <FormControlLabel
+                            classes={{label: classes.service, root: classes.users}}
+                            value="10-100"
+                            label="10-100"
+                            control={<Radio />}
+                          />
+                          <FormControlLabel
+                            classes={{label: classes.service, root: classes.users}}
+                            value="100-500"
+                            label="100-500"
+                            control={<Radio />}
+                          />
+                        </RadioGroup>
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                  <Grid item style={{marginTop: "5em"}}>
+                    <Select
+                      labelId="features"
+                      style={{width: "12em"}}
+                      MenuProps={{style: {zIndex: 1302}}}
+                      id="features"
+                      multiple
+                      displayEmpty
+                      renderValue={features.length > 0 ? undefined : () => "Features"}
+                      value={features}
+                      onChange={event => setFeatures(event.target.value)
+                    }>
+                      {featureOptions.map(option => <MenuItem key={option} value={option}>
+                        {option}
+                      </MenuItem>)}
+                    </Select>
+                  </Grid>
                 </Grid>
+              </Grid>
+            </Grid>
+            <Grid container justify="center">
+              <Grid item>
+                <Button color="primary" style={{fontWeight: 300}}>Cancel</Button>
+              </Grid>
+              <Grid item>
+                <Button variant="contained" className={classes.button}>Add Project +</Button>
               </Grid>
             </Grid>
           </DialogContent>
