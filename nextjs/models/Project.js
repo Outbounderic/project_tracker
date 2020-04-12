@@ -12,6 +12,9 @@ const ProjectSchema = new mongoose.Schema({
   service: {
     type: String
   },
+  complexity: {
+    type: String
+  },
   features: {
     type: String
   },

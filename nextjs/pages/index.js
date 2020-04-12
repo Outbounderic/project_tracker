@@ -20,23 +20,27 @@ import Dialog from '@material-ui/core/Dialog'
 import DialogContent from '@material-ui/core/DialogContent'
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers'
 import DateFnsUtils from '@date-io/date-fns'
+import RadioGroup from '@material-ui/core/RadioGroup'
+import Radio from '@material-ui/core/Radio'
 
 const useStyles = makeStyles(theme => ({
-
+  service: {
+    fontWeight: 300
+  }
 }))
 
-function createData(name, date, service, features, platform, users, total) {
-  return { name, date, service, features, platform, users, total }
+function createData(name, date, service, complexity, features, platform, users, total) {
+  return { name, date, service, complexity, features, platform, users, total }
 }
 
 export default function ProjectTracker() {
   const classes = useStyles()
   const theme = useTheme()
   const [rows, setRows] = useState([
-    createData("Eric", "04/09/20", "Project Tracker", "N/A", "N/A", "10", "$2000"),
-    createData("Eric", "04/09/20", "Project Tracker", "This is a test to see how far it pushes", "N/A", "10", "$2000"),
-    createData("Eric", "04/09/20", "Project Tracker", "N/A", "N/A", "10", "$2000"),
-    createData("Eric", "04/09/20", "Project Tracker", "N/A", "N/A", "10", "$2000")
+    createData("Eric", "04/09/20", "Project Tracker", "Med", "N/A", "N/A", "10", "$2000"),
+    createData("Eric", "04/09/20", "Project Tracker", "Med", "This is a test to see how far it pushes", "N/A", "10", "$2000"),
+    createData("Eric", "04/09/20", "Project Tracker", "Med", "N/A", "N/A", "10", "$2000"),
+    createData("Eric", "04/09/20", "Project Tracker", "Med", "N/A", "N/A", "10", "$2000")
   ])
 
   const [websiteChecked, setWebsiteChecked] = useState(false)
@@ -47,6 +51,9 @@ export default function ProjectTracker() {
   const [name, setName] = useState("")
   const [date, setDate] = useState(new Date())
   const [total, setTotal] = useState("")
+  const [service, setService] = useState("")
+  const [complexity, setComplexity] = useState("")
+  const [users, setUsers] = useState("")
 
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -130,6 +137,7 @@ export default function ProjectTracker() {
                   <TableCell align="center">Name</TableCell>
                   <TableCell align="center">Date</TableCell>
                   <TableCell align="center">Service</TableCell>
+                  <TableCell align="center">Complexity</TableCell>
                   <TableCell align="center">Features</TableCell>
                   <TableCell align="center">Platforms</TableCell>
                   <TableCell align="center">Users</TableCell>
@@ -142,6 +150,7 @@ export default function ProjectTracker() {
                     <TableCell align="center">{row.name}</TableCell>
                     <TableCell align="center">{row.date}</TableCell>
                     <TableCell align="center">{row.service}</TableCell>
+                    <TableCell align="center">{row.complexity}</TableCell>
                     <TableCell style={{maxWidth: "5em"}} align="center">{row.features}</TableCell>
                     <TableCell align="center">{row.platform}</TableCell>
                     <TableCell align="center">{row.users}</TableCell>
@@ -171,6 +180,42 @@ export default function ProjectTracker() {
                       value={name}
                       onChange={(event) => setName(event.target.value)} />
                   </Grid>
+                  <Grid
+                    item
+                    container
+                    direction="column"
+                    style={{marginTop: "5em"}}>
+                    <Grid item>
+                      <Typography variant="h4">Service</Typography>
+                    </Grid>
+                    <Grid item>
+                      <RadioGroup
+                        aria-label="service"
+                        name="service"
+                        value={service}
+                        onChange={event => setService(event.target.value)}
+                        >
+                        <FormControlLabel
+                          classes={{label: classes.service}}
+                          value="Website"
+                          label="Website"
+                          control={<Radio />}
+                        />
+                        <FormControlLabel
+                          classes={{label: classes.service}}
+                          value="Mobile App"
+                          label="Mobile App"
+                          control={<Radio />}
+                        />
+                        <FormControlLabel
+                          classes={{label: classes.service}}
+                          value="Custom Software"
+                          label="Custom Software"
+                          control={<Radio />}
+                        />
+                      </RadioGroup>
+                    </Grid>
+                  </Grid>
                 </Grid>
               </Grid>
               <Grid item>
@@ -181,6 +226,42 @@ export default function ProjectTracker() {
                       value={date}
                       onChange={newDate => setDate(newDate)}
                     />
+                  </Grid>
+                  <Grid
+                    item
+                    container
+                    direction="column"
+                    style={{marginTop: "5em"}}>
+                    <Grid item>
+                      <Typography variant="h4">Complexity</Typography>
+                    </Grid>
+                    <Grid item>
+                      <RadioGroup
+                        aria-label="Complexity"
+                        name="Complexity"
+                        value={service}
+                        onChange={event => setComplexity(event.target.value)}
+                        >
+                        <FormControlLabel
+                          classes={{label: classes.service}}
+                          value="Low"
+                          label="Low"
+                          control={<Radio />}
+                        />
+                        <FormControlLabel
+                          classes={{label: classes.service}}
+                          value="Med"
+                          label="Med"
+                          control={<Radio />}
+                        />
+                        <FormControlLabel
+                          classes={{label: classes.service}}
+                          value="High"
+                          label="High"
+                          control={<Radio />}
+                        />
+                      </RadioGroup>
+                    </Grid>
                   </Grid>
                 </Grid>
               </Grid>
