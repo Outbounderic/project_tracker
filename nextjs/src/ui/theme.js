@@ -85,6 +85,29 @@ export default createMuiTheme({
     }
   },
   overrides: {
+    MuiTableCell: {
+      head: {
+        fontSize: "1rem",
+        fontWeight: 700,
+        color: arcBlue,
+        borderColor: arcBlue,
+        borderWidth: 2
+      },
+      body: {
+        color: arcGrey,
+        borderColor: arcBlue,
+        borderWidth: 2
+      }
+    },
+    MuiFormControlLabel: {
+      label: {
+        color: arcBlue,
+        fontWeight: 700
+      },
+      labelPlacementStart: {
+        marginLeft: 0
+      }
+    },
     MuiInputLabel: {
       root: {
         color: arcBlue,
