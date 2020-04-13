@@ -18,7 +18,7 @@ const ProjectSchema = new mongoose.Schema({
   features: {
     type: String
   },
-  platform: {
+  platforms: {
     type: String
   },
   users: {
@@ -26,6 +26,10 @@ const ProjectSchema = new mongoose.Schema({
   },
   total: {
     type: String
+  },
+  search: {
+    type: Boolean,
+    default: true
   }
 })
 
