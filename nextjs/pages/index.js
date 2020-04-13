@@ -48,23 +48,23 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-function createData(name, date, service, complexity, features, platforms, users, total) {
-  return { name, date, service, complexity, features, platforms, users, total }
+function createData(name, date, service, complexity, features, platforms, users, total, search) {
+  return { name, date, service, complexity, features, platforms, users, total, search }
 }
 
 export default function ProjectTracker() {
   const classes = useStyles()
   const theme = useTheme()
   const [rows, setRows] = useState([
-    createData("Eric", "04/09/20", "Project Tracker", "Med", "N/A", "N/A", "10", "$2000"),
-    createData("Eric", "04/09/20", "Project Tracker", "Med", "This is a test to see how far it pushes", "N/A", "10", "$2000"),
-    createData("Eric", "04/09/20", "Project Tracker", "Med", "N/A", "N/A", "10", "$2000"),
-    createData("Eric", "04/09/20", "Project Tracker", "Med", "N/A", "N/A", "10", "$2000")
+    createData("Eric", "04/09/20", "Project Tracker", "Med", "N/A", "N/A", "10", "$2000", true),
+    createData("Eric", "04/09/20", "Project Tracker", "Med", "This is a test to see how far it pushes", "N/A", "10", "$2000", true),
+    createData("Eric", "04/09/20", "Project Tracker", "Med", "N/A", "N/A", "10", "$2000", true),
+    createData("Eric", "04/09/20", "Project Tracker", "Med", "N/A", "N/A", "10", "$2000", true)
   ])
 
   const platformOptions = ["Web", "iOS", "Android"]
-  let featureOptions = ["Photo/Video", "GPS", "File Transfer", "Users/Authentication", "Biometrics", "Push Notifications"]
-  let websiteOptions = ["Basic", "Interactive", "E-Commerce"]
+  var featureOptions = ["Photo/Video", "GPS", "File Transfer", "Users/Authentication", "Biometrics", "Push Notifications"]
+  var websiteOptions = ["Basic", "Interactive", "E-Commerce"]
 
   const [websiteChecked, setWebsiteChecked] = useState(false)
   const [iOSChecked, setiOSChecked] = useState(false)
@@ -79,6 +79,7 @@ export default function ProjectTracker() {
   const [users, setUsers] = useState("")
   const [platforms, setPlatforms] = useState([])
   const [features, setFeatures] = useState([])
+  const [search, setSearch] = useState("")
 
   const addProject = () => {
     setRows(
@@ -102,6 +103,20 @@ export default function ProjectTracker() {
     setUsers("")
     setPlatforms([])
     setFeatures([])
+    console.log(rows);
+  }
+
+  const handleSearch = () => {
+    setSearch(event.target.value)
+
+    const rowData = rows.map(row => Object.values(row).filter(option => option !== true && option !== false))
+
+    const matches = rowData.map(row => row.map(option => option.toLowerCase().includes(event.target.value.toLowerCase())))
+
+    const newRows = [...rows]
+    matches.map((row, index) => row.includes(true) ? newRows[index].search = true : newRows[index].search = false)
+
+    setRows(newRows)
   }
 
   return (
@@ -113,6 +128,8 @@ export default function ProjectTracker() {
         <Grid item>
           <TextField
             placeholder="Search project details or create a new entry."
+            value={search}
+            onChange={handleSearch}
             style={{width: "35em", marginLeft: "5em"}}
             InputProps={{
               endAdornment:
@@ -194,7 +211,7 @@ export default function ProjectTracker() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {rows.map((row, index) =>
+                {rows.filter(row => row.search).map((row, index) =>
                   <TableRow key={index}>
                     <TableCell align="center">{row.name}</TableCell>
                     <TableCell align="center">{row.date}</TableCell>

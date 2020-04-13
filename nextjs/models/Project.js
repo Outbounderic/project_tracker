@@ -26,6 +26,10 @@ const ProjectSchema = new mongoose.Schema({
   },
   total: {
     type: String
+  },
+  search: {
+    type: Boolean,
+    default: true
   }
 })
 
