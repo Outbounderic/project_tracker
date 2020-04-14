@@ -86,39 +86,39 @@ export default function ProjectTracker() {
 
 // look into await/async
 // on GET split on ", " from database to array
-  const getRows = () => {
-    fetch('http://localhost:3000/api/projects', {
-      method: 'GET',
-        headers: {
-          'Accept': "application/json",
-          'Content-Type': "application/json"
-        }
-      }).then((response) => {
-        return response["data"]
-      })
-  }
+  // const getRows = () => {
+  //   fetch('http://localhost:3000/api/projects', {
+  //     method: 'GET',
+  //       headers: {
+  //         'Accept': "application/json",
+  //         'Content-Type': "application/json"
+  //       }
+  //     }).then((response) => {
+  //       return response["data"]
+  //     })
+  // }
   const addProject = () => {
-    fetch('http://localhost:3000/api/projects', {
-      method: 'POST',
-        headers: {
-          'Accept': "application/json",
-          'Content-Type': "application/json"
-        },
-        body: JSON.stringify({
-        name: name,
-        date: format(date, "MM/dd/yy"),
-        service: service,
-        complexity: service === "Website" ? "N/A" : complexity,
-        features: features.join(", "),
-        platforms: service === "Website" ? "N/A" : platforms.join(", "),
-        users: service === "Website" ? "N/A" : users,
-        total: `$${total}`,
-        search: true
-      })
-
-    }).then((response) => {
-        console.log(response.json());
-      })
+    // fetch('http://localhost:3000/api/projects', {
+    //   method: 'POST',
+    //     headers: {
+    //       'Accept': "application/json",
+    //       'Content-Type': "application/json"
+    //     },
+    //     body: JSON.stringify({
+    //     name: name,
+    //     date: format(date, "MM/dd/yy"),
+    //     service: service,
+    //     complexity: service === "Website" ? "N/A" : complexity,
+    //     features: features.join(", "),
+    //     platforms: service === "Website" ? "N/A" : platforms.join(", "),
+    //     users: service === "Website" ? "N/A" : users,
+    //     total: `$${total}`,
+    //     search: true
+    //   })
+    //
+    // }).then((response) => {
+    //     console.log(response.json());
+    //   })
 
     setRows(
       [...rows,
