@@ -30,8 +30,6 @@ import { format } from "date-fns";
 // import useMediaQuery from "@material-ui/core/useMediaQuery";
 // import Hidden from "@material-ui/core/Hidden";
 
-// import express from 'express'
-
 const useStyles = makeStyles(theme => ({
   service: {
     fontWeight: 300
@@ -57,12 +55,12 @@ function createData(name, date, service, complexity, features, platforms, users,
 export default function ProjectTracker() {
   const classes = useStyles()
   const theme = useTheme()
-  const [rows, setRows] = useState(
-    [createData("Eric", "04/09/20", "Project Tracker", "Med", "N/A", "N/A", "10", "$2000", true),
-    createData("Eric", "04/09/20", "Project Tracker", "Med", "This is a test to see how far it pushes", "N/A", "10", "$2000", true),
-    createData("Eric", "04/09/20", "Project Tracker", "Med", "N/A", "N/A", "10", "$2000", true),
-    createData("Eric", "04/09/20", "Project Tracker", "Med", "N/A", "N/A", "10", "$2000", true)]
-  )
+  const [rows, setRows] = useState([
+    createData("Tasha", "04/09/20", "Website", "Low", "Basic", "N/A", "10-100", "$900", true),
+    createData("Sample Corp", "04/11/20", "Custom Software", "High", "File Transfer, Biometrics", "Web", "0-10", "$2200", true),
+    createData("Small Company", "04/12/20", "Website", "Med", "Interactive", "N/A", "10-100", "$1400", true),
+    createData("Johnny", "04/14/20", "Mobile App", "High", "Photo/Video, GPS, Users/Authentication", "iOS, Android", "100-500", "$2000", true)
+  ])
 
   const platformOptions = ["Web", "iOS", "Android"]
   var featureOptions = ["Photo/Video", "GPS", "File Transfer", "Users/Authentication", "Biometrics", "Push Notifications"]
@@ -83,43 +81,7 @@ export default function ProjectTracker() {
   const [features, setFeatures] = useState([])
   const [search, setSearch] = useState("")
 
-
-// look into await/async
-// on GET split on ", " from database to array
-  // const getRows = () => {
-  //   fetch('http://localhost:3000/api/projects', {
-  //     method: 'GET',
-  //       headers: {
-  //         'Accept': "application/json",
-  //         'Content-Type': "application/json"
-  //       }
-  //     }).then((response) => {
-  //       return response["data"]
-  //     })
-  // }
   const addProject = () => {
-    // fetch('http://localhost:3000/api/projects', {
-    //   method: 'POST',
-    //     headers: {
-    //       'Accept': "application/json",
-    //       'Content-Type': "application/json"
-    //     },
-    //     body: JSON.stringify({
-    //     name: name,
-    //     date: format(date, "MM/dd/yy"),
-    //     service: service,
-    //     complexity: service === "Website" ? "N/A" : complexity,
-    //     features: features.join(", "),
-    //     platforms: service === "Website" ? "N/A" : platforms.join(", "),
-    //     users: service === "Website" ? "N/A" : users,
-    //     total: `$${total}`,
-    //     search: true
-    //   })
-    //
-    // }).then((response) => {
-    //     console.log(response.json());
-    //   })
-
     setRows(
       [...rows,
       createData(
@@ -131,7 +93,7 @@ export default function ProjectTracker() {
         service === "Website" ? "N/A" : platforms.join(", "),
         service === "Website" ? "N/A" : users,
         `$${total}`,
-        search
+        true
       )])
     setDialogOpen(false)
     setName("")
@@ -142,7 +104,6 @@ export default function ProjectTracker() {
     setUsers("")
     setPlatforms([])
     setFeatures([])
-    console.log(rows);
   }
 
   const handleSearch = () => {
