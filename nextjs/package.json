@@ -10,7 +10,6 @@
     "@material-ui/styles": "^4.9.6",
     "clsx": "latest",
     "date-fns": "^2.0.0-beta.5",
-    "express": "^4.17.1",
     "next": "latest",
     "prop-types": "latest",
     "react": "latest",
